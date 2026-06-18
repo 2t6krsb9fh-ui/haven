@@ -1,0 +1,15 @@
+# 隐私保护：密钥不纳入版本控制
+.env
+
+# 依赖目录
+node_modules/
+
+# Netlify 部署产物
+.netlify/functions/*.zip
+.netlify/state.json
+
+# 前端构建产物
+dist/
+
+# Claude Code 会话记录
+.claude/

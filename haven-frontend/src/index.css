@@ -1,0 +1,20 @@
+/* ====== Haven — 全局重置 ====== */
+:root {
+  font-family: 'PingFang SC', 'HarmonyOS Sans', 'MiSans', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #FBF8EA;
+  color: #8B736C;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
