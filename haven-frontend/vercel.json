@@ -1,0 +1,24 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/chat.js": {
+      "maxDuration": 60
+    },
+    "api/auth.js": {
+      "maxDuration": 10
+    },
+    "api/history.js": {
+      "maxDuration": 10
+    },
+    "api/daily-reflection.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    { "source": "/api/chat", "destination": "/api/chat" },
+    { "source": "/api/auth", "destination": "/api/auth" },
+    { "source": "/api/history", "destination": "/api/history" },
+    { "source": "/api/reflection", "destination": "/api/daily-reflection" }
+  ]
+}
