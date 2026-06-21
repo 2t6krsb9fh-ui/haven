@@ -127,9 +127,38 @@ function shouldRespond(event, matrixResult) {
 // ---------- 最终 status 判定已经搬到 haven-stop-capture.js (Stop hook) ----------
 // 这里不再直接决定 observed/responded，只负责过滤真噪音(ignored)和准备上下文
 
+// ---------- Stop hook 失败检测 ----------
+
+function checkStopHookErrors() {
+  const ERROR_LOG = '/tmp/haven-stop-hook-error.log';
+  const LAST_CHECK_FILE = '/tmp/haven-last-error-check.txt';
+
+  if (!fs.existsSync(ERROR_LOG)) return; // 从未报错，跳过
+
+  const logStat = fs.statSync(ERROR_LOG);
+  if (logStat.size === 0) return; // 空文件，跳过
+
+  // 比对上次检查时间，避免同一条错误反复提示
+  let lastCheckTime = 0;
+  if (fs.existsSync(LAST_CHECK_FILE)) {
+    lastCheckTime = parseInt(fs.readFileSync(LAST_CHECK_FILE, 'utf-8').trim()) || 0;
+  }
+
+  if (logStat.mtimeMs <= lastCheckTime) return; // 没有新错误
+
+  // 有新错误 → 注入上下文，让 Leander 知道
+  const errorContent = fs.readFileSync(ERROR_LOG, 'utf-8').trim();
+  console.log(`\n[系统提示] 上次会话的 Stop hook 执行异常，部分响应可能未正确保存：\n${errorContent}\n`);
+
+  // 记录本次检查时间，防止重复提示
+  fs.writeFileSync(LAST_CHECK_FILE, String(Date.now()));
+}
+
 // ---------- 主流程 ----------
 
 async function main() {
+  checkStopHookErrors();
+
   const events = await fetchAllPendingEvents();
 
   if (events.length === 0) {

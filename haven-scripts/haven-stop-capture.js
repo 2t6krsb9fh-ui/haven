@@ -116,6 +116,11 @@ ${transcriptText}
 只返回JSON数组，不要任何其他文字，格式：
 [{"id": "事件id", "addressed": true或false, "response_text": "摘录的原话，没回应则为null"}]`;
 
+  // 调试用：把每次语义匹配的完整输入写入日志，方便事后排查漏判
+  fs.appendFileSync('/tmp/haven-match-debug.log',
+    `${'='.repeat(60)}\n${new Date().toISOString()}\n${prompt}\n\n`
+  );
+
   const res = await fetch(`${MATCH_API_BASE_URL}/v1/messages`, {
     method: 'POST',
     headers: {
