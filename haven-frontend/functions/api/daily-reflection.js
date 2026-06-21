@@ -1,5 +1,14 @@
-// Cloudflare Pages Function — Session Reflection（会话变化洞察）
+// [2026-06-21 已下线] Cloudflare Pages Function — Session Reflection
+// 参见 haven-decommission-daily-reflection.md
+// 下线原因：1) 与终端 reflections.md 职责重复  2) 隐私缺口——完整对话原文发往第三方API
+// 保留文件不删除，留回退余地
 export async function onRequest(context) {
+  return new Response(JSON.stringify({ ok: true, skipped: true, reason: '已于 2026-06-21 下线，参见 haven-decommission-daily-reflection.md' }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+  });
+
+  /* 原逻辑保留，如需恢复取消下方注释即可
   const { request, env } = context;
   const SUPABASE_URL = env.SUPABASE_URL;
   const SUPABASE_KEY = env.SUPABASE_KEY;
@@ -202,3 +211,4 @@ function json(data, status = 200) {
     headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
   });
 }
+  */

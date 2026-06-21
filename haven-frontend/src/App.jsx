@@ -207,20 +207,21 @@ function Chat({ theme, toggleTheme, token }) {
       setLoading(false)
       inputRef.current?.focus()
 
-      // 日终整理：晚安触发 Reflection
-      const goodnight = /\b(晚安|睡了|先睡了|困了|该睡了|今天就这样)\b/
-      if (goodnight.test(userMsg.content)) {
-        const lastReflection = localStorage.getItem('haven_last_reflection')
-        const cooldown = lastReflection ? Date.now() - parseInt(lastReflection) : Infinity
-        if (cooldown > 3600000) { // 每小时最多触发一次
-          fetch('/api/reflection', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sessionId }),
-          }).catch(() => {})
-          localStorage.setItem('haven_last_reflection', String(Date.now()))
-        }
-      }
+      // [2026-06-21 已下线] 日终整理：晚安触发 Reflection
+      // 参见 haven-decommission-daily-reflection.md —— 隐私缺口 + 与终端 reflections.md 职责重复
+      // const goodnight = /\b(晚安|睡了|先睡了|困了|该睡了|今天就这样)\b/
+      // if (goodnight.test(userMsg.content)) {
+      //   const lastReflection = localStorage.getItem('haven_last_reflection')
+      //   const cooldown = lastReflection ? Date.now() - parseInt(lastReflection) : Infinity
+      //   if (cooldown > 3600000) {
+      //     fetch('/api/reflection', {
+      //       method: 'POST',
+      //       headers: { 'Content-Type': 'application/json' },
+      //       body: JSON.stringify({ sessionId }),
+      //     }).catch(() => {})
+      //     localStorage.setItem('haven_last_reflection', String(Date.now()))
+      //   }
+      // }
     }
   }
 
